@@ -1,0 +1,235 @@
+body{
+    background-color: rgb(169, 140, 196);
+}
+.main-block {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+.left{
+    /*background-color: aqua;*/
+    border-right:0px solid rgb(122, 29, 107);
+    width:25%;
+    height: 1010;
+    float: left;
+}
+.right{
+    margin-top: 5%;
+    margin-right: 5%;
+    text-align: center;
+    /* padding:2%;
+    border:5px solid rgb(122, 29, 107); */
+    width:25%;
+    float: right;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.right img {
+    height: 400px;
+}
+.main{
+    margin-right:10%;
+    margin-left:10%;
+    padding:5%;
+    height: 100%;
+    display: inline-block;
+    background-color: rgb(122, 29, 107);
+    vertical-align: top;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.poem{
+    width:100%;
+    display:inline-block;
+    background-color: green;
+}
+#avtor{
+    margin-left: 50%;
+    
+}
+.SpecialMain{
+    padding:1%;
+    height: 700px;
+    display: inline-block;
+    background-color: rgb(122, 29, 107);
+    vertical-align: top;
+    width:40%;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.top{
+    box-shadow: 5px 5px 10px black;
+    background-color: rgb(122, 29, 107);
+    border:0px solid rgb(152, 138, 165);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width:100%;
+    border-radius: 20px;
+}
+.footer{
+    text-decoration-color: aqua;
+    background-color: rgb(122, 29, 107);
+    border:0px solid rgb(152, 138, 165);
+    width:100%;
+    height: 100px;
+    vertical-align: top;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.footer h3 {
+    padding: 15px;
+}
+.baner{
+    border: 0px solid black;
+    /*background-color:rgb(7, 221, 0);*/
+    padding:15%;
+}
+.break{
+    display:inline-block;
+    /*background-color:rgb(255, 0, 0);*/
+    border: 0px solid rgb(164, 189, 189);
+    width:5%;
+    
+}
+.break2{
+    display:inline-block;
+    border: 5px solid rgb(122, 29, 107);
+    width:5%;
+    vertical-align: top;
+    height: 1010px;
+    border-left:none;
+    border-top:none;
+    border-bottom:none;
+}
+a{
+    text-decoration: none;
+}
+.choise{
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+i{
+    color:rgb(164, 189, 189);
+}
+.choise img{
+    height: 150px;
+    width: 150px;
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+}
+.choise img:first-child {
+    margin: 0 10px;
+}
+.choise img:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+}
+ul,
+li {
+    font-size: 30px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-block {
+    cursor: pointer;
+    margin-left: 10px;
+    z-index: 5;
+}
+
+.menu-block > span {
+    border-radius: 10px;
+    background-color: rgb(65, 0, 187);
+    padding: 5px;
+}
+
+.menu-block:hover > span {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.menu-block:hover > .menu {
+    display: block;
+} 
+
+.menu {
+    margin-top: 5px;
+    display: none;
+    position: absolute;
+    background-color: rgb(65, 0, 187);
+}
+
+.menu-item {
+    background-color: rgb(65, 0, 187);
+    position: relative;
+    padding: 5px 10px;
+}
+
+.menu-item:hover {
+    background-color: rgba(0,0,0,.2);
+    position: relative;
+}
+
+.menu-item:first-child {
+    border-top-right-radius: 10px;
+}
+
+.menu-item:first-child:hover {
+    border-top-right-radius: 0px;
+}
+
+.menu-item:last-child {
+    border-bottom-left-radius: 10px;
+}
+
+.sub-menu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: rgb(65, 0, 187);
+}
+
+.sub-menu > li {
+    padding: 5px 10px;
+}
+
+.sub-menu > li:hover {
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.sub-menu > li:first-child{
+    border-top-right-radius: 10px;
+}
+
+.sub-menu > li:first-child:hover {
+    border-top-right-radius: 0px;
+}
+
+.sub-menu > li:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.menu-item:hover > .sub-menu {
+    display: flex;
+    flex-direction: column;
+}
+#avatar{
+    margin-left: 10%;
+    float:left;
+    border:5px solid rgb(87, 0, 145);
+}
+#check{
+    padding-left:20%;
+    padding-right:30%;
+}
