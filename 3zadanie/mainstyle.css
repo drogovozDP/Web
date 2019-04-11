@@ -1,0 +1,118 @@
+
+.container-fluid{
+    background-color:rgb(58, 57, 57);
+}
+.container{
+    border:2px solid black;
+    
+}
+.menu{
+    padding:15px;
+
+    background-color: rgb(77, 11, 11);
+}
+.top{
+    text-emphasis-color: rgb(51, 51, 51);;
+    background-color: rgb(51, 51, 51);
+}
+.footer{
+    background-color: rgb(51, 51, 51);
+}
+.row{
+    border:2px solid none;
+}
+.col{
+    background-color: dimgray;
+    border:2px solid none;
+}
+.info{
+    padding-top:2%;
+    padding-bottom:2%;
+    border-left:1px solid black;
+    text-align: center;
+}
+i{
+    color:rgb(255, 255, 255);
+}
+.present{
+    text-align: center;
+}
+h4{
+    color:rgb(255, 255, 255);
+}
+.warinfo{
+    text-align: center;
+}
+.jija{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#breadcrumbs-one{
+    background: rgb(77, 11, 11);
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    }
+    
+    #breadcrumbs-one li{
+    float: left;
+    }
+    
+    #breadcrumbs-one a{
+    padding: .7em 1em .7em 2em;
+    float: left;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    position: relative;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    ;
+    background-image: linear-gradient(to right, rgb(107, 15, 15), rgb(58, 14, 14));
+    }
+    
+    #breadcrumbs-one li:first-child a{
+    padding-left: 1em;
+    border-radius: 5px 0 0 5px;
+    }
+    
+    #breadcrumbs-one a:hover{
+    background: rgb(129, 19, 19);
+    }
+    
+    #breadcrumbs-one a::after,
+    #breadcrumbs-one a::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -1.5em;
+    border-top: 1.5em solid transparent;
+    border-bottom: 1.5em solid transparent;
+    border-left: 1em solid;
+    right: -1em;
+    }
+    
+    #breadcrumbs-one a::after{
+    z-index: 2;
+    border-left-color: rgb(58, 14, 14);
+    }
+    
+    #breadcrumbs-one a::before{
+    border-left-color: #ccc;
+    right: -1.1em;
+    z-index: 1;
+    }
+    
+    #breadcrumbs-one a:hover::after{
+    border-left-color: rgb(129, 19, 19);
+    }
+    
+    #breadcrumbs-one .current,
+    #breadcrumbs-one .current:hover{
+    font-weight: bold;
+    background: none;
+    }
+    
+    #breadcrumbs-one .current::after,
+    #breadcrumbs-one .current::before{
+    content: normal;
+    }
