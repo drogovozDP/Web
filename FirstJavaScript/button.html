@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <meta charset="utf-8" />
+    <title>MOCHA</title>
+    <script src="jojo.js"></script>
+    <link href="style.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row top">
+                <button id="priv"onClick="privet()">ПРИВЕТ</button>
+        </div>
+        <div class="container">
+            <div class="row rows">
+                <div class="col">    
+                    <div class="yacheyka">
+                        <p class="pero">площадь квадрата</p>
+                        <div class="zadanie"><p id="demo"></p></div>
+                        <button id = "kvadrat"onClick="square()">вычислить</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="yacheyka">
+                        <p class="pero">страшная формула</p>
+                        <div class="bigzadanie"><p id="umnoj"></p></div>
+                        <button id = "kvadrat"onClick="sycle()">умножить</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row rows">
+                <div class="col co1">
+                    <div class="BIGyacheyka">
+                        <p class="pero">матрица 8х8</p>
+                            <table border=0 align="center">
+                                <tr><td id="t1"></td></tr>
+                            </table>
+                        <button id = "arrbutton"onClick="addName()">переставить</button>
+                    </div>
+                </div>
+                <div class="col co2">
+                    <div class="BIGyacheyka row">                        
+                        <div class="col example4">
+                            <form>
+                                <div class="example4">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <input class="random butrand" type="button" value="рандом" onclick="vivod()"><br>
+                                                <input class="random" id="a" type="text" value="min">
+                                                <input class="random" id="b" type="text" value="max"> 
+                                            </td>
+                                        </tr>
+                                    </table>                                                      
+                                </div>
+                            </form>
+                            <div class="example4">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input class="random" id="greatarray" type="text" value="a"><br>
+                                            <input class="random butrand" id="buttmatr"type="button" value="3" onclick="getResultArray()"><br>
+                                        </td>
+                                    </tr>
+                                </table>                                
+                            </div>
+                        </div>
+                        <div class="col example4">
+                            <form>
+                                <div class="example4">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <input class="random butrand" id="buttmatr"type="button" value="масс" onclick="getArray()"><br>
+                                                <input class="random" id="mas" type="text" value="10"><br>                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                </form>
+                                <br/>
+                                <div class="example4">
+                                    <input class="random" id="MEGAbuttmatr"type="button" value="ржака" onclick="snake()"><br>
+                                </div>
+                                </div>
+                            </div>    
+                    </div>
+                </div>
+                
+            </div>
+                <div  class="col">
+                <div class="yacheyka">    
+                    <p>вывод случайной матрицы</p>
+                        <p id="vivod" ></p>
+                        
+                    </div>
+                </div>                
+                <div class="col">
+                    <div class="yacheyka">
+                        <p>РЖАКА</p>
+                        <p id="vivod2"></p>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+</body>
+</html>
