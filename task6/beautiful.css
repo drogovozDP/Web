@@ -1,0 +1,31 @@
+.top{
+    background-color: rgb(73, 26, 117);
+    align-content:center;
+}
+.ban{
+    padding-left:50px;
+    padding-top:50px;
+    margin-bottom:150px;
+}
+.ban1{
+    padding-left:150px;
+    padding-top:50px;
+    margin-bottom:150px;
+}
+div{
+    display:inline-block;
+    background-color: blueviolet;
+}
+#app{
+    margin-top: 50px;
+    display: inline-block;
+}
+.container-fluid{
+    height:1000px;
+}
+.row{
+    height:100px;
+    text-align:center;
+    display:ruby-base;
+}
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+<head>
+    <script src='vue.js'></script>
+    <script src='java.js'></script>
+    <link href="beautiful.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+            integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+</head>
+<body>
+
+ 
+    <div class="container-fluid">
+      <div class="row top">
+        <div class="col top"><button onClick='poem()'>стих</button></div>
+        <div class="col top"><button onClick='ItsMe()'>обо мне</button></div>
+        <div class="col top"><button onClick='video()'>контент</button></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row ban"><img src='alex.jpg'></div>
+          <div class="row ban"><img src='jiza.png'></div>
+          <div class="row ban"><img src='sc2.png'></div>
+        </div>
+        <div class="col"><div id = "app"><div v-html="message" id='app'></div></div></div>
+        <div class="col">
+            <div class="row ban1"><img src='overmind.jpg'></div>
+        </div>
+      </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {message:'<h2>Hello</h2>'}
+        });
+    </script>
+</body>
+</html>
