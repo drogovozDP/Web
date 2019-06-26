@@ -132,11 +132,11 @@
                     balls[i].posY = balls[i].posY + (Math.random()*y-x);
                     balls[i].rBall += Make_bigger;
                     balls[i].draw(ctx);
-                    for (let j = i-1; j >= 0; j--)
+                   /* for (let j = i-1; j >= 0; j--)
                     {
                         if (((Math.pow(Math.abs(balls[i].posX - balls[j].posX), 2) + Math.pow(Math.abs(balls[j].posY - balls[j].posY), 2)) - Math.pow(balls[i].rBall, 2) + Math.pow(balls[j].rBall, 2)) < 0)                        
                         balls.splice(i,1);
-                    }
+                    }*/
                     
                     if ((balls[i].posX > canvas.width)||(balls[i].posX < 0) ||(balls[i].posY < 0)||(balls[i].posY > canvas.height)) 
                         balls.splice(i,1);
@@ -155,11 +155,11 @@
                     balls[i].posY = balls[i].posY + (Math.random()*4-2);
                     balls[i].rBall += Make_bigger;
                     balls[i].draw(ctx);
-                    for (let j = i-1; j >= 0; j--)
+                   /* for (let j = i-1; j >= 0; j--)
                     {
                         if (((Math.pow(Math.abs(balls[i].posX - balls[j].posX), 2) + Math.pow(Math.abs(balls[j].posY - balls[j].posY), 2)) - Math.pow(balls[i].rBall, 2) + Math.pow(balls[j].rBall, 2)) < 0)                        
                         balls.splice(i,1);
-                    }
+                    }*/
                     if ((balls[i].posX > canvas.width)||(balls[i].posX < 0) ||(balls[i].posY < 0)||(balls[i].posY > canvas.height)) 
                         balls.splice(i,1);
                     else 
@@ -177,11 +177,11 @@
                     balls[i].posY = balls[i].posY + (Math.random()*balls[i].directY * z);
                     balls[i].rBall += Make_bigger;
                     balls[i].draw(ctx);
-                    for (let j = i-1; j >= 0; j--)
+                   /* for (let j = i-1; j >= 0; j--)
                     {
                         if (((Math.pow(Math.abs(balls[i].posX - balls[j].posX), 2) + Math.pow(Math.abs(balls[j].posY - balls[j].posY), 2)) - Math.pow(balls[i].rBall, 2) + Math.pow(balls[j].rBall, 2)) < 0)                        
                         balls.splice(i,1);
-                    }
+                    }*/
                     if ((balls[i].posX > canvas.width)||(balls[i].posX < 0) ||(balls[i].posY < 0)||(balls[i].posY > canvas.height)) 
                         balls.splice(i,1);
                     else 

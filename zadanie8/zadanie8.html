@@ -1,0 +1,103 @@
+<html>
+<head>
+	<title>Canvas & Mootools</title>
+	<script>
+		let x, ctx, image, idTimer, position, picture, unit, Move_timer;
+		let enemy = [];
+		x = 200;
+		class Bustards
+		{
+			constructor(x,y)
+			{
+				this.x = x;
+				this.y = y;
+			}
+			image = new Image();
+			draw()
+			{
+				/*position = this.y;			
+				this.image.src = 'Kovalenko_watch.png';
+				picture = this.image;
+				
+				picture.onload = function() 
+				{
+					//idTimer = setInterval('move();',50); 					
+					ctx.drawImage(picture, x, position, 40, 40); 
+				}*/
+
+				ctx.beginPath();
+				ctx.fillStyle = "rgb(145, 148, 170)";
+				ctx.arc(this.x + 10, this.y, 11, 0, 2*Math.PI, false);
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x, this.y, 10, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+			}
+		};		
+		
+		function move()
+		{
+			for (let i = 0; i < enemy.length; i ++)
+			{
+				enemy[i].x -=0.5;
+				enemy[i].draw();
+				//ctx.drawImage(image, enemy[i].x, enemy[i].y, 40, 40); 
+			}
+			x-=1;
+		}
+		function create()
+		{
+			let unit = new Bustards(300, Math.random()*100+10);
+			unit.draw();		
+			enemy.push(unit);
+		}
+
+		function init(){
+			canvas = document.getElementById('canvas');
+			if (canvas.getContext) ctx = canvas.getContext('2d');
+			idTimer = setInterval('create();',2500);
+			Move_timer = setInterval('move();', 60);
+		}
+	</script>
+	<style type="text/css">
+		canvas 
+		{
+			border: 10px solid rgb(55, 55, 66); 		 			
+			padding: 0;
+			margin: auto;
+			margin-top:50px;
+			display:block;
+			width: 1000px;
+			height: 500px;
+			background-color:rgb(145, 148, 170);
+		}
+		#fon
+		{
+			padding: 0;
+			margin: auto;
+			display: block;
+			height: 1000px;
+			background-color: grey;
+		}
+		#table
+		{
+			height:200px;
+			background-color: rgb(119, 8, 8);
+		}
+		
+	</style>
+</head>
+<body onload="init()">
+	<div id="fon">
+		<div id="table">
+			asdf
+		</div>
+		<canvas id="canvas" ></canvas>
+		<button onClick="move()">запустить Коваленко</button>
+		<button onClick="create()">создать Коваленко</button>
+	</div>
+</body>
+</html>
