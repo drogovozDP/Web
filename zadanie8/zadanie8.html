@@ -2,8 +2,9 @@
 <head>
 	<title>Canvas & Mootools</title>
 	<script>
-		let x, ctx, image, idTimer, position, picture, unit, Move_timer;
+		let over_gun, x_cannon, y_cannon, kovalenko_x, x, ctx, image, idTimer, position, picture, unit, Move_timer;
 		let enemy = [];
+		let push = [];
 		x = 200;
 		class Bustards
 		{
@@ -12,53 +13,122 @@
 				this.x = x;
 				this.y = y;
 			}
-			image = new Image();
 			draw()
 			{
-				/*position = this.y;			
-				this.image.src = 'Kovalenko_watch.png';
-				picture = this.image;
-				
-				picture.onload = function() 
-				{
-					//idTimer = setInterval('move();',50); 					
-					ctx.drawImage(picture, x, position, 40, 40); 
-				}*/
-
 				ctx.beginPath();
 				ctx.fillStyle = "rgb(145, 148, 170)";
-				ctx.arc(this.x + 10, this.y, 11, 0, 2*Math.PI, false);
+				ctx.arc(this.x + 10, this.y, 21, 0, 2*Math.PI, false);
 				ctx.fill();
 				ctx.closePath();
 				ctx.beginPath();
 				ctx.fillStyle = "black";
-				ctx.arc(this.x, this.y, 10, 0, 2*Math.PI, false)
+				ctx.arc(this.x, this.y, 20, 0, 2*Math.PI, false)
 				ctx.fill();
 				ctx.closePath();
 			}
-		};		
+		};	
+		class Kovalenko
+		{
+			constructor(x,y)
+			{
+				this.x = x;
+				this.y = y;
+			}
+
+			image = new Image();
+			draw()
+			{
+				position = this.y;			
+				this.image.src = 'Kovalenko_watch.png';
+				picture = this.image;		
+				kovalenko_x = this.x;		
+				picture.onload = function() 
+				{
+					ctx.beginPath();
+					ctx.fillStyle = "rgb(145, 148, 170)";	
+					ctx.rect(kovalenko_x, position, 70, 70);
+					ctx.fill();
+					ctx.closePath();	
+					ctx.drawImage(picture, kovalenko_x, position, 70, 70); 
+				}
+			}	
+		}	
+		class cannon
+		{
+			constructor(x, y)
+			{
+				this.x = 10;
+				this.y = 280;
+				this.k = x / y;
+				this.k.toFixed();
+			}
+			draw()
+			{
+				//alert(this.k.toFixed());
+				
+				ctx.beginPath();
+				ctx.fillStyle = "rgb(145, 148, 170)";
+				ctx.arc(this.x, this.y, 11, 0, 2*Math.PI, false);
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "red";
+				ctx.arc(this.x + 5, this.y - this.x * this.k, 10, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+			}
+		};
+
 		
 		function move()
 		{
-			for (let i = 0; i < enemy.length; i ++)
+			for (let i = 0; i < enemy.length; i++)
 			{
-				enemy[i].x -=0.5;
+				enemy[i].x -=1;
 				enemy[i].draw();
-				//ctx.drawImage(image, enemy[i].x, enemy[i].y, 40, 40); 
+				//over_gun.draw();
 			}
+				
+			
 			x-=1;
 		}
 		function create()
 		{
-			let unit = new Bustards(300, Math.random()*100+10);
+			let unit = new Bustards(620, Math.random()*300+10);
 			unit.draw();		
 			enemy.push(unit);
 		}
 
+		function create_kovalenko()
+		{
+			let unit = new Kovalenko(620, Math.random()*300+10);
+			unit.draw();		
+			enemy.push(unit);
+		}
+	
+		/*function cannon_direction(e) 
+		{
+			x_cannon = e.clientX - 520;
+			over_gun = new cannon(x_cannon, y_cannon);
+			push.push(over_gun);
+			let a = setInterval('shot();', 100);
+			//push.push(over_gun);
+		}
+		function shot()
+		{
+			for (let i = 0; i < push.length; i)
+				push[i].draw();
+				push[i].x +=5;
+				push[i].y = push[i].y - push[i].x * push[i].k;
+				if (push[i].y < 0) over_gun.toggle();
+				else ++i;
+			
+		}*/
+
 		function init(){
 			canvas = document.getElementById('canvas');
 			if (canvas.getContext) ctx = canvas.getContext('2d');
-			idTimer = setInterval('create();',2500);
+			idTimer = setInterval('create();',3500);
 			Move_timer = setInterval('move();', 60);
 		}
 	</script>
@@ -70,8 +140,7 @@
 			margin: auto;
 			margin-top:50px;
 			display:block;
-			width: 1000px;
-			height: 500px;
+		
 			background-color:rgb(145, 148, 170);
 		}
 		#fon
@@ -87,17 +156,20 @@
 			height:200px;
 			background-color: rgb(119, 8, 8);
 		}
-		
+		body
+		{
+			background-color: grey;
+		}		
 	</style>
 </head>
 <body onload="init()">
-	<div id="fon">
-		<div id="table">
-			asdf
-		</div>
-		<canvas id="canvas" ></canvas>
+	<div id="table"></div>
+	<div id = "fon">
+		<canvas id="canvas" width="600" height="400" onClick="cannon_direction(event);" ></canvas>
 		<button onClick="move()">запустить Коваленко</button>
-		<button onClick="create()">создать Коваленко</button>
+		<button onClick="create_kovalenko()">создать Коваленко</button>
+		<p id="demo"></p>
 	</div>
+	
 </body>
 </html>
