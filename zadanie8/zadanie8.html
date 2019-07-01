@@ -2,27 +2,113 @@
 <head>
 	<title>Canvas & Mootools</title>
 	<script>
-		let over_gun, x_cannon, y_cannon, kovalenko_x, x, ctx, image, idTimer, position, picture, unit, Move_timer;
+		let x_cannon, y_cannon, kovalenko_x, x, ctx, image, idTimer, position, picture, unit, Move_timer, live, max_live, shot_move, shot_time, score, canvas_reload, del, death, kovalenko_move, kovalenko_count, x_gun, y_gun, k_gun, user, boss_exict, enemy_step, paused, position_2, frenzy_step;
 		let enemy = [];
 		let push = [];
+		paused = false;
+		enemy_step = 1;
+		frenzy_step = 4;
+		boss_exict = false;
+		kovalenko_count = 0;
+		kovalenko_move = true;
+		score = 500;
 		x = 200;
+		shot_time = true;
 		class Bustards
 		{
 			constructor(x,y)
 			{
 				this.x = x;
 				this.y = y;
+				this.frenzy = 0;
+				this.boss = false;
+				this.target = 20;
 			}
 			draw()
 			{
 				ctx.beginPath();
 				ctx.fillStyle = "rgb(145, 148, 170)";
-				ctx.arc(this.x + 10, this.y, 21, 0, 2*Math.PI, false);
+				ctx.arc(this.x + enemy_step, this.y - this.frenzy, this.target + 1, 0, 2*Math.PI, false);
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "yellowgreen";
+				ctx.arc(this.x, this.y, this.target, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "white";
+				ctx.arc(this.x - 6.5, this.y - 1, this.target - 16.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "white";
+				ctx.arc(this.x + 6.5, this.y - 1, this.target - 16.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				if (this.frenzy < 0)
+				{
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x - 8, this.y - 2.5, this.target - 18, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x + 5, this.y - 2.5, this.target - 18, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+				}	
+				else
+				{
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x - 8, this.y + 0.5, this.target - 18, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x + 5, this.y + 0.5, this.target - 18, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+
+				}	
+				ctx.beginPath();		
+				ctx.fillStyle = "black";
+				ctx.arc(this.x, this.y + 10, this.target - 16, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "red";
+				ctx.arc(this.x, this.y + 10, this.target - 17, 0, 2*Math.PI, false)
 				ctx.fill();
 				ctx.closePath();
 				ctx.beginPath();
 				ctx.fillStyle = "black";
-				ctx.arc(this.x, this.y, 20, 0, 2*Math.PI, false)
+				ctx.arc(this.x-2, this.y + 5, this.target - 17.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x+2, this.y + 5, this.target - 17.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x-4, this.y + 7, this.target - 17.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x+4, this.y + 7, this.target - 17.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+			}
+			death()
+			{
+				ctx.beginPath();
+				ctx.fillStyle = "rgb(145, 148, 170)";
+				ctx.arc(this.x, this.y, this.target + 1, 0, 2*Math.PI, false)
 				ctx.fill();
 				ctx.closePath();
 			}
@@ -33,63 +119,216 @@
 			{
 				this.x = x;
 				this.y = y;
-			}
-
+				this.boss = true;
+				this.frenzy = 0;
+				this.target = 5;
+				this.life = 3;
+			}			
 			image = new Image();
+			del = new Image();
 			draw()
 			{
-				position = this.y;			
+				if (kovalenko_move)
+				{
+					position = this.y;	
+					position_2 = this.frenzy;
+					kovalenko_x = this.x;			
+					this.image.src = 'Kovalenko_walk.png';
+					this.del.src = 'death.png'
+					picture = this.image;	
+					death = this.del;							
+					picture.onload = function() 
+					{
+						ctx.drawImage(death, kovalenko_x + enemy_step, position - position_2, 72, 72); 
+						ctx.drawImage(picture, kovalenko_x, position, 70, 70); 
+					}
+				}	
+			}	
+			watch()
+			{
+				kovalenko_move = false;
+				kovalenko_x = this.x;	
+				position = this.y;
+				position_2 = this.frenzy;			
 				this.image.src = 'Kovalenko_watch.png';
-				picture = this.image;		
-				kovalenko_x = this.x;		
+				this.del.src = 'death.png'
+				picture = this.image;	
+				death = this.del;						
 				picture.onload = function() 
 				{
-					ctx.beginPath();
-					ctx.fillStyle = "rgb(145, 148, 170)";	
-					ctx.rect(kovalenko_x, position, 70, 70);
-					ctx.fill();
-					ctx.closePath();	
+					ctx.drawImage(death, kovalenko_x + enemy_step, position - position_2, 72, 72); 
 					ctx.drawImage(picture, kovalenko_x, position, 70, 70); 
 				}
-			}	
-		}	
+			}
+			death()
+			{
+				position = this.y;			
+				this.image.src = 'death.png';
+				picture = this.image;		
+				kovalenko_x = this.x;		
+				position_2 = this.frenzy;
+				picture.onload = function() 
+				{
+					ctx.drawImage(picture, kovalenko_x, position - position_2, 70, 70); 
+				}
+			}
+		};	
 		class cannon
 		{
 			constructor(x, y)
 			{
-				this.x = 10;
-				this.y = 280;
-				this.k = x / y;
-				this.k.toFixed();
+				this.x = 0;
+				this.y = 395;
+				this.k = Math.pow(y / x, 6 );	
+				this.target = 10;
+				this.count = 0;
 			}
 			draw()
 			{
-				//alert(this.k.toFixed());
-				
 				ctx.beginPath();
 				ctx.fillStyle = "rgb(145, 148, 170)";
 				ctx.arc(this.x, this.y, 11, 0, 2*Math.PI, false);
 				ctx.fill();
 				ctx.closePath();
 				ctx.beginPath();
+				ctx.fillStyle = "greenyellow";
+				ctx.arc(this.x + 5, this.y - this.k, 10, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x + 2, this.y - this.k - 3, 3.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x + 10, this.y - this.k - 3, 3.5, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "white";
+				ctx.arc(this.x + 2, this.y - this.k - 3, 3, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "white";
+				ctx.arc(this.x + 10, this.y - this.k - 3, 3, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x + 5, this.y - this.k + 5, 3, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
 				ctx.fillStyle = "red";
-				ctx.arc(this.x + 5, this.y - this.x * this.k, 10, 0, 2*Math.PI, false)
+				ctx.arc(this.x + 5, this.y - this.k + 5, 2, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x + 4, this.y - this.k + 3, 2, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.arc(this.x + 6, this.y - this.k + 3, 2, 0, 2*Math.PI, false)
+				ctx.fill();
+				ctx.closePath();
+				if(this.k > 0)
+				{
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x + 2.5, this.y - this.k - 3.5, 1.5, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x + 10.5, this.y - this.k - 3.5, 1.5, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+				}
+				else
+				{
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x + 2, this.y - this.k - 2.5, 1.5, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+					ctx.beginPath();
+					ctx.fillStyle = "black";
+					ctx.arc(this.x + 10, this.y - this.k - 2.5, 1.5, 0, 2*Math.PI, false)
+					ctx.fill();
+					ctx.closePath();
+				}
+			}
+			death()
+			{
+				ctx.beginPath();
+				ctx.fillStyle = "rgb(145, 148, 170)";
+				ctx.arc(this.x , this.y, 11, 0, 2*Math.PI, false);
 				ctx.fill();
 				ctx.closePath();
 			}
 		};
 
-		
+		function Total_score(n)
+		{
+			score +=100 * n;
+			document.getElementById("my_score").innerHTML = score;
+			localStorage.setItem(user, score);
+		}
 		function move()
 		{
-			for (let i = 0; i < enemy.length; i++)
+			for (let i = 0; i < enemy.length;)
 			{
-				enemy[i].x -=1;
-				enemy[i].draw();
-				//over_gun.draw();
+				if(enemy[i].boss)
+				{
+					if(kovalenko_move)
+					{
+						enemy[i].x -=enemy_step;											
+						enemy[i].frenzy = Math.random()*-frenzy_step + frenzy_step/2;		
+						if (enemy[i].y - enemy[i].target - 5 < 0) enemy[i].frenzy +=5;				
+						enemy[i].y += enemy[i].frenzy;	
+						enemy[i].draw();
+					}
+				}
+				else
+				{
+					enemy[i].x -=enemy_step;
+					enemy[i].frenzy = Math.random()*-frenzy_step + frenzy_step/2;
+					if (enemy[i].y - enemy[i].target < 0) enemy[i].frenzy +=5;
+					enemy[i].y += enemy[i].frenzy;	
+					enemy[i].draw();
+				}
+				if(enemy[i].x - enemy[i].target < 0) 
+				{
+					if (enemy[i].boss)
+					{
+						enemy_step+=1;
+						enemy[i].death();
+						boss_exict = false;
+						draw_live();
+						enemy.splice(i,1);
+						document.getElementById('level').innerHTML = "уровень: " + enemy_step;
+					}
+					else
+					{
+						enemy[i].death();
+						draw_live();
+						enemy.splice(i,1);
+					}			
+				}
+				else i++;
 			}
-				
-			
+			if (!kovalenko_move) kovalenko_count++;
+			if (kovalenko_count == 30) 
+			{
+				kovalenko_move = true;
+				kovalenko_count = 0;
+
+			}
+			check_shot();
 			x-=1;
 		}
 		function create()
@@ -97,6 +336,12 @@
 			let unit = new Bustards(620, Math.random()*300+10);
 			unit.draw();		
 			enemy.push(unit);
+			if (score % 500 == 0) 
+			{
+				for (let i = 0; i < enemy.length; i++) 
+				if (enemy[i].boss) boss_exict = true;
+				if (!boss_exict) create_kovalenko();
+			}
 		}
 
 		function create_kovalenko()
@@ -105,51 +350,302 @@
 			unit.draw();		
 			enemy.push(unit);
 		}
-	
-		/*function cannon_direction(e) 
+
+		function draw_gun(event)
 		{
-			x_cannon = e.clientX - 520;
-			over_gun = new cannon(x_cannon, y_cannon);
-			push.push(over_gun);
-			let a = setInterval('shot();', 100);
-			//push.push(over_gun);
+			ctx.beginPath(); 
+			ctx.moveTo(0, 395); 
+			ctx.lineTo(x_gun, 395 - k_gun * 100); 
+			ctx.strokeStyle = "rgb(145, 148, 170)"
+			ctx.lineWidth = 4;
+			ctx.stroke(); 			
+			ctx.closePath();
+			x_gun = event.clientX;
+			y_gun = 1150 - event.clientY;		
+			k_gun =Math.pow(y_gun / x_gun, 6);	
+			ctx.beginPath(); 
+			ctx.moveTo(0, 395); 
+			ctx.lineTo(x_gun, 395 - k_gun * 100); 
+			ctx.strokeStyle = "red"
+			ctx.lineWidth = 2;
+			ctx.stroke(); 
+			ctx.closePath();
+		}
+	
+		function cannon_direction(event) 
+		{
+			//let a = Math.random()*-10 + 5;
+			//alert(a);
+			if (shot_time == true)
+			{
+				x_cannon = event.clientX
+				y_cannon = 1150 - event.clientY
+				//alert(y_cannon);
+				let over_gun = new cannon(x_cannon, y_cannon);
+				push.push(over_gun);
+				shot_time = false;
+				ctx_reload.beginPath();
+				ctx_reload.fillStyle = "rgb(158, 11, 0)";
+				ctx_reload.rect(0, 0, 150, 20);
+				ctx_reload.fill();
+				ctx_reload.closePath();
+			}		
 		}
 		function shot()
-		{
-			for (let i = 0; i < push.length; i)
-				push[i].draw();
-				push[i].x +=5;
-				push[i].y = push[i].y - push[i].x * push[i].k;
-				if (push[i].y < 0) over_gun.toggle();
-				else ++i;
-			
-		}*/
+		{	
+			for (let j = 0; j < push.length;)
+			{
+				push[j].draw();
+				push[j].x +=5;
+				if (push[j].count < 40) 
+				{
+					push[j].count++;
+					push[j].y = push[j].y - push[j].k;
+				}
+				else 
+				{
+					push[j].k = push[j].k - 0.2;
+					push[j].y = push[j].y - push[j].k;
+				}
+				if (push[j].x > 865) push.splice(j, 1);
+				else j++;
+			}
+			if (push.length == 0) shot_time = true;
+			if (push.length != 0)
+			if (push[push.length - 1].x > 150) shot_time = true;
+			else reload(ctx_reload, push[push.length - 1].x);
+		}
 
+		function reload(ctx, x)
+		{
+			ctx.beginPath();
+			ctx.fillStyle = "green";
+			ctx.rect(0,0,x,20);
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		function draw_live()
+		{
+			live.src = 'live.png';	
+			live.onload = function() 
+			{
+				ctx_live.beginPath();
+				ctx_live.fillStyle = "rgb(145, 148, 170)";
+				ctx_live.rect(0, 0, 220, 60);
+				ctx_live.fill();
+				ctx_live.closePath();				
+				for (let i = 0; i < max_live; i++)
+				ctx_live.drawImage(live, 6 * (i * 7), 6, 50, 50); 
+				if (max_live == 0) 
+				{
+					clearInterval(idTimer);
+					clearInterval(Move_timer);
+					table_score();
+				}
+				else max_live -=1;
+			}
+		}
+
+		function table_score()
+		{
+			document.getElementById('score_table').innerHTML = "рекорды: " + localStorage.length;
+			document.getElementById('score_table').innerText += '\n';
+			for (let i = 0; i < localStorage.length; i++)
+			{
+				let key = localStorage.key(i);
+				let str = '';
+				str =key +': '+ localStorage.getItem(key);
+				document.getElementById('score_table').innerText +=str;
+				document.getElementById('score_table').innerText +="\n";
+			}
+		}
+
+		function check_shot()
+		{
+			if (push.length == 0) return;
+			if (push.length == 1)
+			for (let j = 0; j < enemy.length;)
+			{
+				if (push.length == 0) break;
+				if(typeof push == "undefined") break;
+				let b = Math.abs(push[0].y - enemy[j].y);
+				let a = Math.abs(push[0].x - enemy[j].x);
+				
+				let c = (Math.pow(a, 2) + Math.pow(b, 2))
+				if (Math.pow(push[0].target + enemy[j].target, 2) >= c)
+				{			
+					if (enemy[j].boss)
+					{							
+						enemy[j].watch();
+						enemy[j].life--;
+						push[0].death();
+						push.splice(0, 1);
+						if (enemy[j].life == 0)
+						{
+							Total_score(10);	
+							enemy_step+=1;	
+							frenzy_step = frenzy_step * 2;							
+							enemy[j].death();				
+							enemy.splice(j, 1);
+							//let str = getElementById("level");
+							document.getElementById('level').innerHTML = "уровень: " + enemy_step;
+							boss_exict = false;
+						}
+						j++;
+						if (push.length == 0) break;
+					}	
+					else
+					{
+						Total_score(1);
+						push[0].death();
+						enemy[j].death();
+						push.splice(0, 1);
+						enemy.splice(j, 1);
+						if (push.length == 0) break;
+					}
+				}
+				else j++;														
+			}
+			else
+			for (let i = 0; i < push.length;)
+			{
+				if (push.length == 0) break;
+				for (let j = 0; j < enemy.length;)
+				{
+					if (push.length == 1) break;
+					let b = Math.abs(push[i].y - enemy[j].y);
+					let a = Math.abs(push[i].x - enemy[j].x);					
+					let c = (Math.pow(a, 2) + Math.pow(b, 2))
+					if (Math.pow(push[i].target + enemy[j].target, 2) >= c)
+					{			
+						if (enemy[j].boss)
+						{							
+							enemy[j].watch();
+							enemy[j].life--;
+							push[i].death();
+							push.splice(i, 1);
+							if (enemy[j].life == 0)
+							{
+								Total_score(10);	
+								enemy_step+=1;
+								frenzy_step = frenzy_step * 2;							
+								enemy[j].death();				
+								enemy.splice(j, 1);
+								document.getElementById('level').innerHTML =  "уровень: " + enemy_step;
+								boss_exict = false;
+							}
+							j++;
+							if (push.length == 0) break;
+						}	
+						else
+						{
+							Total_score(1);
+							push[i].death();
+							enemy[j].death();
+							push.splice(i, 1);
+							enemy.splice(j, 1);
+							if (push.length == 0) break;
+						}
+					}
+					else j++;														
+				}
+				i++;
+			}
+
+		}
+
+		function del_all_score() 
+		{
+			localStorage.clear();
+		}
+		function pause()
+		{
+			if (paused)
+			{
+				idTimer = setInterval('create();',3500);
+				Move_timer = setInterval('move();', 50);	
+				shot_move = setInterval('shot();', 30);	
+				document.getElementById('pause').innerHTML = "пауза";
+				paused = false;
+			}
+			else
+			{
+				clearInterval(idTimer);
+				clearInterval(Move_timer);
+				clearInterval(shot_move);
+				document.getElementById('pause').innerHTML = "возобновить";
+				paused = true;
+			}		
+		}
+		function change_user()
+		{
+			user=prompt('введите имя');
+			document.getElementById('user').innerHTML = user;
+			localStorage.setItem(user, 0);
+		}
 		function init(){
+			change_user();
 			canvas = document.getElementById('canvas');
 			if (canvas.getContext) ctx = canvas.getContext('2d');
+			canvas_live = document.getElementById("canvas_live");
+			if (canvas.getContext) ctx_live = canvas_live.getContext('2d');
+			canvas_reload = document.getElementById("canvas_reload");
+			if (canvas.getContext) ctx_reload = canvas_reload.getContext('2d');
 			idTimer = setInterval('create();',3500);
-			Move_timer = setInterval('move();', 60);
+			Move_timer = setInterval('move();', 50);	
+			shot_move = setInterval('shot();', 30);	
+			live = new Image();
+			max_live = 5;
+			draw_live();
 		}
 	</script>
 	<style type="text/css">
-		canvas 
+		#canvas 
 		{
 			border: 10px solid rgb(55, 55, 66); 		 			
 			padding: 0;
 			margin: auto;
 			margin-top:50px;
 			display:block;
-		
 			background-color:rgb(145, 148, 170);
+		}
+		#name 
+		{
+			display:inline-block;
+			background-color:white;
+			border: 10px solid rgb(55, 55, 66); 
+			
+		}
+		#canvas_live 
+		{
+			display:inline-block;
+			border: 10px solid rgb(55, 55, 66); 		 			
+			padding: 0;
+			background-color:rgb(145, 148, 170);
+		}
+		#canvas_reload
+		{
+			border: 10px solid rgb(55, 55, 66); 		 			
+			padding: 0;
+			margin: auto;
+			display:block;
+			background-color:green;
 		}
 		#fon
 		{
-			padding: 0;
 			margin: auto;
 			display: block;
 			height: 1000px;
 			background-color: grey;
+		}
+		#table_score
+		{
+			
+
+			display:inline-block;
+			background-color:white;
+			border: 10px solid rgb(55, 55, 66); 	
 		}
 		#table
 		{
@@ -159,16 +655,32 @@
 		body
 		{
 			background-color: grey;
-		}		
+		}	
+		button
+		{
+			border:10px solid rgb(55, 55, 66);
+			font-size: 20px;
+		}	
 	</style>
 </head>
 <body onload="init()">
-	<div id="table"></div>
+	<div id="table">
+		<div >
+			<div id="name"><h2 id="user">asdfasdf</h2></div>
+			<canvas id="canvas_live" width="220" height="60" onClick="cannon_direction(event);"><canvas>
+		</div>
+		
+		<div id="table_score"><h2 id = "my_score">. . .</h2></div>
+	</div>
 	<div id = "fon">
-		<canvas id="canvas" width="600" height="400" onClick="cannon_direction(event);" ></canvas>
-		<button onClick="move()">запустить Коваленко</button>
-		<button onClick="create_kovalenko()">создать Коваленко</button>
-		<p id="demo"></p>
+		<canvas id="canvas" width="600" height="400" onClick="cannon_direction(event);" onmousemove="draw_gun(event)" ></canvas>
+		<canvas id="canvas_reload" width="150" height="20" onClick="cannon_direction(event);" ></canvas>
+		<button onClick="pause()" id = "pause">пауза</button>
+		<button onClick="change_user()">сменить имя</button>
+		<button onClick="del_all_score()">стереть все рекорды</button>
+		<button onClick="table_score()">посмотреть рекорды</button>
+		<div id="name"><h2 id="level">уровень: 1</h2></div>
+		<div id="name"><h4 id="score_table">рекорды</h4></div>
 	</div>
 	
 </body>
