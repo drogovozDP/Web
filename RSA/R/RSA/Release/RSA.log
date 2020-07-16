@@ -1,8 +1,0 @@
-﻿  main.cpp
-c:\users\кирилл\desktop\rsa-master\rsa\bigint.h(135): warning C4018: <: несоответствие типов со знаком и без знака
-  Создание кода
-  3 of 466 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    5 functions had inline decision re-evaluated but remain unchanged
-  Создание кода завершено
-  RSA.vcxproj -> C:\Users\Кирилл\Desktop\RSA-master\Release\RSA.exe
